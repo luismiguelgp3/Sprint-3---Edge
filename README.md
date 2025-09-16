@@ -2,11 +2,11 @@
 
 # Participantes
 
-Luis Miguel RM561232
-Rafael Joda RM561939
-Davi Alves RM 566279
-Camila de Mendonça RM 565491
-Diego Zandonadi RM 561488
+Luis Miguel RM561232 <br>
+Rafael Joda RM561939 <br>
+Davi Alves RM 566279 <br>
+Camila de Mendonça RM 565491 <br>
+Diego Zandonadi RM 561488 <br>
 
 # Descrição do Projeto
 
