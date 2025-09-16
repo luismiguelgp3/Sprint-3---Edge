@@ -10,7 +10,7 @@ Diego Zandonadi RM 561488 <br>
 
 # Descrição do Projeto
 
-O projeto desenvolvido na sprint é uma bandeira tecnológica com dispositivo IoT (ESP32) que traz inovação para a profissão de árbitro assistente na qual são adicionados botões para habilitar uma comunicação mais fácil e fluída entre toda equipe arbitrária
+O projeto desenvolvido na sprint é uma bandeira tecnológica com dispositivo IoT (ESP32) que traz inovação para a profissão de árbitro assistente na qual são adicionados botões para habilitar uma comunicação mais fácil e fluída entre toda equipe arbitrária e adicionar mais informações e estatisticas sobre os jogos
 
 # Arquitetura Proposta
 
