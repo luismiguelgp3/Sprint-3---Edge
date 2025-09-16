@@ -26,3 +26,11 @@ No wokwi, utiliza o ESP32 normal, conectar os botões ao ESP32 sendo o lado dire
 Entre no thingspeak, crie a conta, crie o canal, pegue a write api key e coloque na variável apikey, coloque o wifi e senha nas variáveis ssid e password.
 O seu produto estará funcionando.
 
+# Script de Configuração da plataforma
+
+field1 = Escanteio
+field2 = Lateral
+field3 = Impedimento
+
+Api_key = 31HOZMTM3911YQYQ
+
