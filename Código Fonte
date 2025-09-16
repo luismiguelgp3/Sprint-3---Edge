@@ -1,0 +1,101 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+// Configuração WiFi
+const char* ssid = "AP22";
+const char* password = "L021726m#1";
+
+// Chave do ThingSpeak
+String apiKey = "31HOZMTM3911YQYQ";
+const char* server = "http://api.thingspeak.com/update";
+
+// Pinos dos Botões
+int botaoEscanteio = 12; 
+int botaoLateral = 13; 
+int botaoImped = 14; 
+
+// Variáveis de estado para debounce e detecção de "pressão"
+int lastStateEscanteio = HIGH;
+int lastStateLateral = HIGH;
+int lastStateImped = HIGH;
+
+void setup() {
+  Serial.begin(115200);
+  // Usando INPUT_PULLUP
+  pinMode(botaoEscanteio, INPUT_PULLUP);
+  pinMode(botaoLateral, INPUT_PULLUP);
+  pinMode(botaoImped, INPUT_PULLUP);
+
+  // Conecta no WiFi
+  WiFi.begin(ssid, password);
+  Serial.print("Conectando ao WiFi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi conectado!");
+  Serial.print("Endereço IP: ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  // Leitura do estado atual dos botões
+  int currentStateEscanteio = digitalRead(botaoEscanteio);
+  int currentStateLateral = digitalRead(botaoLateral);
+  int currentStateImped = digitalRead(botaoImped);
+
+  // Lógica para Escanteio
+  if (currentStateEscanteio == LOW && lastStateEscanteio == HIGH) {
+    if (WiFi.status() == WL_CONNECTED) {
+      enviarDados(1, 1); // field1 = 1 para Escanteio
+    }
+    delay(50); // Debounce
+  }
+  lastStateEscanteio = currentStateEscanteio;
+
+  // Lógica para Lateral
+  if (currentStateLateral == LOW && lastStateLateral == HIGH) {
+    if (WiFi.status() == WL_CONNECTED) {
+      enviarDados(2, 1); // field2 = 1 para Lateral
+    }
+    delay(50); // Debounce
+  }
+  lastStateLateral = currentStateLateral;
+
+  // Lógica para Impedimento
+  if (currentStateImped == LOW && lastStateImped == HIGH) {
+    if (WiFi.status() == WL_CONNECTED) {
+      enviarDados(3, 1); // field3 = 1 para Impedimento
+    }
+    delay(50); // Debounce
+  }
+  lastStateImped = currentStateImped;
+}
+
+// Função para enviar dados ao ThingSpeak
+void enviarDados(int field, int valor) {
+  HTTPClient http;
+  String url = server;
+  url += "?api_key=" + apiKey;
+
+  // Adiciona o campo e o valor à URL
+  if (field == 1) {
+    url += "&field1=" + String(valor);
+    Serial.println("Enviando Escanteio...");
+  } else if (field == 2) {
+    url += "&field2=" + String(valor);
+    Serial.println("Enviando Lateral...");
+  } else if (field == 3) {
+    url += "&field3=" + String(valor);
+    Serial.println("Enviando Impedimento...");
+  }
+
+  http.begin(url);
+  int httpCode = http.GET();
+  if (httpCode > 0) {
+    Serial.printf("Requisição HTTP bem-sucedida! Código: %d\n", httpCode);
+  } else {
+    Serial.printf("Erro na requisição HTTP. Código: %d\n", httpCode);
+  }
+  http.end();
+}
