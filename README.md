@@ -34,3 +34,7 @@ field3 = Impedimento
 
 Api_key = 31HOZMTM3911YQYQ
 
+# Simulação
+
+https://wokwi.com/projects/442197804454616065
+
